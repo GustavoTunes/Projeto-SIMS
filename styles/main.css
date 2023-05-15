@@ -1,0 +1,284 @@
+/* GERAL */
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    position: static;
+    top: 0;
+}
+
+main{
+  background-color: #f1f1f1;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 0.5rem;
+    text-align: center;
+    position:static;
+    bottom: 0;
+    width: 100%;
+}
+
+li{
+    display: inline;
+    float: right;
+}
+/* FIM DO GERAL */
+
+
+
+/* NAVBAR */
+
+#logo{
+    float: left;
+    width: 4%;
+    margin-right: 30%;
+}
+
+.navbar{
+    display: flex;
+    justify-content: center;
+    float: left;
+    margin-top: 8px;
+}
+
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+
+.navbar li{
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.dropdown-item {
+    display: inline-flex;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+  }
+
+.navbar a:hover{
+  text-decoration: none;
+}
+
+.navbar a{
+  color: inherit;
+}
+
+
+/* ESPAÇAMENTO ENTRE ITEMS DO NAVBAR */
+  header a:not(.dropdown-item), #dropdownMenuLink{
+    margin-right: 60px;
+  }
+
+/* FIM DO NAVBAR */
+
+/* BARRA DE PESQUISA */
+  .wrapper {
+    display: inline-flex;
+    width: 80%;
+    max-width: 20rem;
+    margin-top: 12px;
+  }
+  
+  .label {
+    font-size: .625rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: +1.3px;
+    margin-bottom: 1rem;
+  }
+  
+  .searchBar {
+    float: right;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  #searchQueryInput {
+    width: 100%;
+    height: 2.8rem;
+    background: #f5f5f5;
+    outline: none;
+    border: none;
+    border-radius: 1.625rem;
+    padding: 0 3.5rem 0 1.5rem;
+    font-size: 1rem;
+  }
+  
+  #searchQuerySubmit {
+    width: 3.5rem;
+    height: 2.8rem;
+    margin-left: -3.5rem;
+    background: none;
+    border: none;
+    outline: none;
+  }
+  
+  #searchQuerySubmit:hover {
+    cursor: pointer;
+  }
+
+/* FIM DA BARRA DE PESQUISA */
+
+  /*ICONES DO RODAPÉ*/
+  .icons{
+    font-size: 20px;
+  }
+
+  .icons i{
+    display: inline-flex;
+    height: 40px;
+    width: 40px;
+    background: black;
+    color: white;
+    margin: 0 6px;
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+  }
+
+  .icons i:hover{
+    background: white;
+    color: black;
+  }
+
+  .icons a i{
+    transition: 00.4s all;
+  }
+
+  .icons a:hover > i{
+    transform: scale(1.0) rotate(25deg);
+  }
+
+/*FIM DOS ICONES*/
+
+/* INFORMAÇÕES */
+
+.infos a{
+  display: inline-flex;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  padding: 5px;
+}
+
+.infos p{
+  font-size: 14px;
+}
+
+.infos a:hover{
+  color: black;
+  text-decoration: none;
+}
+/* FIM DAS INFORMAÇÕES */
+
+/* FOOTER */
+
+footer p{
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
+}
+
+/* FOOTER */
+
+
+/* CARROSSEL */
+
+.carousel-item{
+  height: 32rem;
+  background-color: #777;
+  margin: 1rem auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.container{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: 50px;
+  color: #ffffff;
+}
+
+.overlay-image1{
+  background-image: url(../images/vacinacao.jpg);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.4;
+}
+
+.overlay-image2{
+  background-image: url(../images/recemnascido.jpg);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.4;
+}
+
+.overlay-image3{
+  background-image: url(../images/smartwatch.jpg);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.4;
+}
+
+/* FIM DO CARROSSEL */
+
+/* PROPAGANDA */
+
+.ad img{
+  width: 36rem;
+  height: 6rem;
+}
+
+.ad{
+  flex-direction: column;
+  margin: 1rem auto;
+  display: flex;
+  align-items: center;
+}
+
+/* FIM DA PROPAGANDA */
