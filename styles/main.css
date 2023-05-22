@@ -420,7 +420,12 @@ footer p{
 }
 
 @media (max-width: 800px) {
- 
+
+  .wrapper{
+    margin-left: 2rem;
+    padding-top: 1.5rem;
+  }
+
 /* NOTICIAS */
 .news {
   display: flex;
@@ -489,5 +494,6 @@ footer p{
   .prop img{
     width: 15rem;
   }
+
 }
   
