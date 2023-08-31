@@ -36,16 +36,16 @@
                 Baixada Santista
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="dropdown-menu">
-                <a class="dropdown-item" href="#">Santos</a>
-                <a class="dropdown-item" href="#">Praia Grande</a>
-                <a class="dropdown-item" href="#">São Vicente</a>
-                <a class="dropdown-item" href="#">Guarujá</a>
-                <a class="dropdown-item" href="#">Cubatão</a>
-                <a class="dropdown-item" href="#">Itanhaém</a>
-                <a class="dropdown-item" href="#">Peruíbe</a>
-                <a class="dropdown-item" href="#">Bertioga</a>
-                <a class="dropdown-item" href="#">Mongaguá</a> 
-              </div>
+                <a class="dropdown-item" th:href="@{/bertioga}">Bertioga</a>
+				<a class="dropdown-item" th:href="@{/cubatao}">Cubatão</a>
+				<a class="dropdown-item" th:href="@{/guaruja}">Guarujá</a>
+				<a class="dropdown-item" th:href="@{/itanhaem}">Itanhaém</a>
+				<a class="dropdown-item" th:href="@{/mongagua}">Mongaguá</a>
+				<a class="dropdown-item" th:href="@{/peruibe}">Peruíbe</a>
+				<a class="dropdown-item" th:href="@{/praiagrande}">Praia Grande</a>
+				<a class="dropdown-item" th:href="@{/santos}">Santos</a>
+				<a class="dropdown-item" th:href="@{/saovicente}">São Vicente</a>
+			</div>
             </li>
             <a class="nav-link" href="#">Doenças</a>
             <a class="nav-link" href="#">Eventos</a>
@@ -65,7 +65,7 @@
 	</header>
 	<main>
 		<!-- Carrossel -->
-		<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+		<!--  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="1" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>

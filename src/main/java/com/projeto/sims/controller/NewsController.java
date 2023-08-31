@@ -1,6 +1,7 @@
 package com.projeto.sims.controller;
 
 import org.jsoup.Jsoup;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class NewsController {
@@ -58,35 +62,42 @@ public class NewsController {
 	public String saovicente() {
 		return "saovicente";
 	}
+
 	
-	private String getNewsForCity(String cidade, Model model) {
-	    String url = "https://www.bertioga.sp.gov.br/?s=sa%C3%BAde"; // Substitua pela URL do site de notícias
+	private static final Map<String, String> siteCidade = new HashMap<>();
 
+	static {
+		
+		siteCidade.put("Bertioga", "https://www.bertioga.sp.gov.br/?s=sa%C3%BAde");
+		siteCidade.put("Cubatão", "https://www.cubatao.sp.gov.br/?s=sa%C3%BAde");
+		siteCidade.put("Guaruja", ""); //link quebra pq n tem uri específica
+		siteCidade.put("Itanhaem", ""); //link quebra pq n tem uri específica
+		siteCidade.put("Mongagua", ""); //link quebra pq n tem uri específica
+		siteCidade.put("Peruibe", "http://www.peruibe.sp.gov.br/?s=sa%C3%BAde");
+		siteCidade.put("PraiaGrande", ""); //Tem que ser pesquisas mais específicas
+		siteCidade.put("Santos", "https://www.santos.sp.gov.br/lista-de-noticias/151");
+		siteCidade.put("SaoVicente", "https://www.saovicente.sp.gov.br/pesquisa?pesquisa=vacina%E7%E3o"); //Tem que ser pesquisas mais específicas
+		
+	}
+	
+	private String getNewsForCity(String cidade, String url, Model model) {
+
+		Map<String, String> seletorCidade = new HashMap<>();
+	    seletorCidade.put("bertioga", ".news__wrapper"); // Substitua pelo seletor correto para Bertioga
+	    seletorCidade.put("cubatao", ".noticia"); 
+	    seletorCidade.put("cubatao", ".noticia"); 
+	    seletorCidade.put("cubatao", ".noticia"); 
+	    seletorCidade.put("cubatao", ".noticia"); 
+	    seletorCidade.put("cubatao", ".noticia"); 
+	    seletorCidade.put("cubatao", ".noticia"); 
+	    seletorCidade.put("cubatao", ".noticia"); 
+	    seletorCidade.put("cubatao", ".noticia"); 
+		
+	    String seletor = seletorCidade.get(cidade.toLowerCase());
+
+	    if (seletor != null) {
+	    	
 	    try {
-			/*
-			 * Document document = Jsoup.connect(url).get();
-			 * 
-			 * Elements newsRows = document.select(".news__wrapper"); // Seletor para as
-			 * linhas da tabela de notícias
-			 * 
-			 * StringBuilder newsForCity = new StringBuilder();
-			 * 
-			 * for (Element article : newsRows) { String title =
-			 * article.select(".news__title").text(); // Seletor para o título do artigo
-			 * String content = article.select(".news__excerpt").text(); // Seletor para o
-			 * conteúdo do artigo
-			 * 
-			 * System.out.println(title);
-			 * 
-			 * if (title.contains(cidade) || content.contains(cidade)) { if
-			 * (content.contains("saúde")) {
-			 * newsForCity.append("<h2>").append(title).append("</h2>");
-			 * newsForCity.append("<p>").append(content).append("</p>"); } } }
-			 * 
-			 * model.addAttribute("city", cidade); model.addAttribute("news",
-			 * newsForCity.toString());
-			 */
-
 	    	StringBuilder newsForCity = new StringBuilder();
 	    	
 	    	Document document = Jsoup.connect(url).get();
@@ -96,14 +107,11 @@ public class NewsController {
 	    		String title = noticia.select(".news__title").text(); // Seletor para o título do artigo
 	    		String content = noticia.select(".news__excerpt").text(); // Seletor para o
 	    		
-	    		System.out.println(title);
-	    		System.out.println(content);
-	    		
-	    	
 				 newsForCity.append("<h2>").append(title).append("</h2>");
 				 newsForCity.append("<p>").append(content).append("</p>"); 
 				 
 	    	}
+	    	
 	    model.addAttribute("city", cidade); model.addAttribute("news",
 				 newsForCity.toString());
 
@@ -118,7 +126,7 @@ public class NewsController {
 	        model.addAttribute("news", "Erro ao buscar notícias.");
 	        return "bertioga";
 	    }
-}
+	}
 }
 
     
