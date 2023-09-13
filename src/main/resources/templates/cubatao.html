@@ -21,7 +21,19 @@
 </head>
 <body>
 
-<h1> Notícias de Cubatão </h1>
+	<h1>
+		Notícias de <span th:text="${#strings.capitalize(cidade)}"></span>
+	</h1>
 
+	<div th:each="noticia : ${noticiasList}">
+		<div class="noticia">
+			<img th:src="${noticia.imagem}" alt="${noticia.title}">
+			<h2 th:text="${noticia.title}"></h2>
+			<p th:text="${noticia.data}"></p>
+			<p th:text="${noticia.content}"></p>
+		</div>
+
+		<hr>
+	</div>
 </body>
 </html>

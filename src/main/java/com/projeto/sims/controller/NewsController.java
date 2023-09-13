@@ -26,43 +26,43 @@ public class NewsController {
 	}
 
 	@GetMapping("/cubatao")
-	public String cubatao() {
-		return "cubatao";
+	public String cubatao(Model model) {
+		return puxarNoticias("cubatao", model);
 	}
 
 	@GetMapping("/guaruja")
-	public String guaruja() {
-		return "guaruja";
+	public String guaruja(Model model) {
+		return puxarNoticias("guaruja", model);
 	}
 
 	@GetMapping("/itanhaem")
-	public String itanhaem() {
-		return "itanhaem";
+	public String itanhaem(Model model) {
+		return puxarNoticias("itanhaem", model);
 	}
 
 	@GetMapping("/mongagua")
-	public String mongagua() {
-		return "mongagua";
+	public String mongagua(Model model) {
+		return puxarNoticias("mongagua", model);
 	}
 
 	@GetMapping("/peruibe")
-	public String peruibe() {
-		return "peruibe";
+	public String peruibe(Model model) {
+		return puxarNoticias("peruibe", model);
 	}
 
 	@GetMapping("/praiagrande")
-	public String praiagrande() {
-		return "praiagrande";
+	public String praiagrande(Model model) {
+		return puxarNoticias("praiagrande", model);
 	}
 
 	@GetMapping("/santos")
-	public String santos() {
-		return "santos";
+	public String santos(Model model) {
+		return puxarNoticias("santos", model);
 	}
 
 	@GetMapping("/saovicente")
-	public String saovicente() {
-		return "saovicente";
+	public String saovicente(Model model) {
+		return puxarNoticias("saovicente", model);
 	}
 
 	//
@@ -75,7 +75,7 @@ public class NewsController {
 		// associando e armazenando urls específicas para cada cidade
 		
 		siteCidade.put("bertioga", "https://www.bertioga.sp.gov.br/?s=sa%C3%BAde");
-		siteCidade.put("cubatão", "https://www.cubatao.sp.gov.br/?s=sa%C3%BAde");
+		siteCidade.put("cubatao", "https://www.cubatao.sp.gov.br/?s=sa%C3%BAde");
 		siteCidade.put("guaruja", "https://www.guaruja.sp.gov.br/categoria/saude/");
 		siteCidade.put("itanhaem", "https://www2.itanhaem.sp.gov.br/tag/saude/");
 		siteCidade.put("mongagua", "https://www.mongagua.sp.gov.br/noticias/saude");
@@ -87,14 +87,14 @@ public class NewsController {
 		// associando e armazenando seletores específicos para cada cidade
 		
 		seletorCidade.put("bertioga", ".news__wrapper");
-		seletorCidade.put("cubatão", ".elementor-widget-wrap.elementor-element-populated");
-		seletorCidade.put("guaruja", ".mvp-main-blog-out.left.relative");
-		seletorCidade.put("itanhaem", ".col-lg-10.col-md-10.col-sm-12");
-		seletorCidade.put("mongagua", "item");
+		seletorCidade.put("cubatao", ".pp-post-wrap");
+		seletorCidade.put("guaruja", ".mvp-blog-story-text");
+		seletorCidade.put("itanhaem", ".row");
+		seletorCidade.put("mongagua", "list-item");
 		seletorCidade.put("peruibe", "article");
-		seletorCidade.put("praiagrande", "tr");
-		seletorCidade.put("santos", "grid-item.col-xs-12.col-sm-6.col-md-4.col-lg-4");
-		seletorCidade.put("saovicente", ".noticia");
+		seletorCidade.put("praiagrande", ".borda_top_cinza");
+		seletorCidade.put("santos", ".grid-item.col-xs-12.col-sm-6.col-md-4.col-lg-4");
+		seletorCidade.put("saovicente", ".desc-noticia");
 	}
 
 	public String puxarNoticias(String cidade, Model model) {
@@ -121,19 +121,143 @@ public class NewsController {
 						Noticia topico = new Noticia(imagem, title, data, content);
 	                    noticiasList.add(topico); // Adicione cada notícia à lista
 	                
-						
-						/*System.out.println(title);
-						System.out.println(content);
-						
-						newsForCity.append("<img>").append(imagem).append("/<img>");
-						newsForCity.append("<h2>").append(title).append("</h2>");
-						newsForCity.append("<div>").append(data).append("</div>");
-						newsForCity.append("<p>").append(content).append("</p>");
-					*/
 					}
 					
 					break;
 				
+				case "cubatao":
+					
+					for (Element noticia : noticias) {
+						String imagem = noticia.select("img").attr("src");
+						String title = noticia.select(".elementor-widget-theme-post-title h1").text();
+						String data = noticia.select(".elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date").text();
+						String content = noticia.select(".elementor-widget-container").text();
+
+						Noticia topico = new Noticia(imagem, title, data, content);
+	                    noticiasList.add(topico); // Adicione cada notícia à lista
+					
+					}
+					
+					break;
+					
+				case "guaruja":
+					
+					for (Element noticia : noticias) {
+						String imagem = noticia.select(".mvp-reg-img").attr("src");
+						String title = noticia.select("h2").text();
+						String data = noticia.select(".mvp-cd-date left relative span").text();
+						String content = noticia.select("p").text();
+
+						Noticia topico = new Noticia(imagem, title, data, content);
+	                    noticiasList.add(topico); // Adicione cada notícia à lista
+					    
+					}
+					
+					break;
+					
+				case "itanhaem":
+					
+					for (Element noticia : noticias) {
+		                // Seletor para o link dentro da notícia
+		                Element link = noticia.select("h4 a").first(); // Substitua pelo seletor correto
+
+		                // Verifique se há um link dentro da notícia
+		                if (link != null) {
+		                    String urlNoticia = link.attr("href");
+
+		                    // Fazer uma solicitação HTTP para a URL da notícia
+		                    Document noticiaDocument = Jsoup.connect(urlNoticia).get();
+
+		                    Element primeiroParagrafo = document.select("p").first();
+		                    // Extrair informações da notícia
+		                    String imagem = noticiaDocument.select(".img-responsive img").attr("src");
+		                    String title = noticia.select("h4").text(); // Substitua pelo seletor correto
+						    String data = noticia.select("span").text();
+
+						    Noticia topico = new Noticia(imagem, title, data, primeiroParagrafo.text());
+		                    noticiasList.add(topico);
+		                }
+		            }
+					
+					break;
+					
+				case "mongagua":
+					
+					for (Element noticia : noticias) {
+						String imagem = noticia.select(".list-image").attr("href");
+						String title = noticia.select(".list-title").text();
+						String data = noticia.select(".list_date").text();
+						String content = noticia.select("._1mf _1mj div").text();
+
+						Noticia topico = new Noticia(imagem, title, data, content);
+	                    noticiasList.add(topico); // Adicione cada notícia à lista
+	                    
+	                    System.out.println(title);
+					
+					}
+					
+					break;	
+
+				case "peruibe":
+					
+					for (Element noticia : noticias) {
+						String imagem = noticia.select("attachment-post-thumbnail img").attr("href");
+						String title = noticia.select("h2").text();
+						String data = noticia.select(".entry-date published time").text();
+						String content = noticia.select("p").text();
+
+						Noticia topico = new Noticia(imagem, title, data, content);
+	                    noticiasList.add(topico); // Adicione cada notícia à lista
+	                    
+					}
+					
+					break;
+					
+				case "praiagrande":
+					
+					for (Element noticia : noticias) {
+						String imagem = noticia.select("img").attr("href");
+						String title = noticia.select(".borda_top_cinza td").text();
+						String data = noticia.select(".olho_chamada font").text();
+						String content = noticia.select(".olho_chamada td").text();
+
+						Noticia topico = new Noticia(imagem, title, data, content);
+	                    noticiasList.add(topico); // Adicione cada notícia à lista
+	                    
+					}
+					
+					break;
+					
+				case "santos":
+					
+					for (Element noticia : noticias) {
+						String imagem = noticia.select("img").attr("src");
+						String title = noticia.select("h3").text();
+						String data = noticia.select(".field-content").text();
+						String content = noticia.select(".field field-name-body field-type-text-with-summary field-label-hidden div").text();
+
+						Noticia topico = new Noticia(imagem, title, data, content);
+	                    noticiasList.add(topico); // Adicione cada notícia à lista
+	                    
+					}
+					
+					break;
+
+				case "saovicente":
+					
+					for (Element noticia : noticias) {
+						String imagem = noticia.select("img").attr("src");
+						String title = noticia.select("h3").text();
+						String data = noticia.select(".data-pesquisa-materia span").text();
+						String content = noticia.select(".field field-name-body field-type-text-with-summary field-label-hidden div").text();
+
+						Noticia topico = new Noticia(imagem, title, data, content);
+	                    noticiasList.add(topico); // Adicione cada notícia à lista
+	                    
+					}
+					
+					break;
+					
 				default:
 				
 					model.addAttribute("cidade", cidade);
