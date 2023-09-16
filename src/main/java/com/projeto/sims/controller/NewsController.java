@@ -90,7 +90,7 @@ public class NewsController {
 		seletorCidade.put("cubatao", ".pp-post-wrap");
 		seletorCidade.put("guaruja", ".mvp-blog-story-text");
 		seletorCidade.put("itanhaem", ".row");
-		seletorCidade.put("mongagua", "list-item");
+		seletorCidade.put("mongagua", ".list-item");
 		seletorCidade.put("peruibe", "article");
 		seletorCidade.put("praiagrande", ".borda_top_cinza");
 		seletorCidade.put("santos", ".grid-item.col-xs-12.col-sm-6.col-md-4.col-lg-4");
@@ -113,13 +113,36 @@ public class NewsController {
 				case "bertioga":
 				
 					for (Element noticia : noticias) {
+						
+						Elements links = noticia.select("div a"); // Obter todos os links dentro do h4
+						
+						 for (Element link : links) {
+						    	
+						    	if (link != null) {
+						    	
+						        String urlNoticia = link.attr("href");
+
+						        // Fazer uma solicitação HTTP para a URL da notícia
+						        Document noticiaDocument = Jsoup.connect(urlNoticia).get();
+
+				                // Verifica se encontrou um ponto e extrai a frase até esse ponto
+						        Elements divs = noticiaDocument.select("div.post-content__content");
+
+					                String texto = divs.first().text();
+						
+					                int primeiroPonto = texto.indexOf('.');
+
+					                String fraseDesejada = (primeiroPonto >= 0) ? texto.substring(0, primeiroPonto + 1) : texto;
+
 						String imagem = noticia.select("img").attr("src");
 						String title = noticia.select(".news__title").text();
 						String data = noticia.select(".news__details").text();
-						String content = noticia.select(".news__excerpt").text();
+						String content = fraseDesejada;
 
 						Noticia topico = new Noticia(imagem, title, data, content);
 	                    noticiasList.add(topico); // Adicione cada notícia à lista
+						    	}
+						 }
 	                
 					}
 					
@@ -127,15 +150,33 @@ public class NewsController {
 				
 				case "cubatao":
 					
+					
+					
 					for (Element noticia : noticias) {
+						
+						// Seletor para o link dentro da notícia
+						    Elements links = noticia.select(".elementor-widget-theme-post-title h1 a"); // Obter todos os links dentro do h4
+
+						    // Iterar sobre os links dentro do h4
+						    for (Element link : links) {
+						    	
+						    	if (link != null) {
+						    	
+						        String urlNoticia = link.attr("href");
+						// Fazer uma solicitação HTTP para a URL da notícia
+				        
 						String imagem = noticia.select("img").attr("src");
 						String title = noticia.select(".elementor-widget-theme-post-title h1").text();
-						String data = noticia.select(".elementor-icon-list-text elementor-post-info__item elementor-post-info__item--type-date").text();
+						String data = noticia.select(".elementor-icon-list-text").text();
 						String content = noticia.select(".elementor-widget-container").text();
+						
+						content = content.replace(title, "").replace(data, "");
 
 						Noticia topico = new Noticia(imagem, title, data, content);
 	                    noticiasList.add(topico); // Adicione cada notícia à lista
-					
+										
+					}
+						    }
 					}
 					
 					break;
@@ -143,6 +184,19 @@ public class NewsController {
 				case "guaruja":
 					
 					for (Element noticia : noticias) {
+					    // Seletor para o link dentro da notícia
+					   /* Elements links = noticia.select("h2 a"); // Obter todos os links dentro do h4
+
+					    // Iterar sobre os links dentro do h4
+					    for (Element link : links) {
+					    	
+					    	if (link != null) {
+					    	
+					        String urlNoticia = link.attr("href");
+
+					        // Fazer uma solicitação HTTP para a URL da notícia
+					        Document noticiaDocument = Jsoup.connect(urlNoticia).get();*/
+					        
 						String imagem = noticia.select(".mvp-reg-img").attr("src");
 						String title = noticia.select("h2").text();
 						String data = noticia.select(".mvp-cd-date left relative span").text();
@@ -151,49 +205,81 @@ public class NewsController {
 						Noticia topico = new Noticia(imagem, title, data, content);
 	                    noticiasList.add(topico); // Adicione cada notícia à lista
 					    
-					}
+					    	//}
+					    	//}
+					    	}
+					
+					/*for (Element noticia : noticias) {
+						String imagem = noticia.select(".mvp-reg-img").attr("src");
+						String title = noticia.select("h2").text();
+						String data = noticia.select(".mvp-cd-date left relative span").text();
+						String content = noticia.select("p").text();
+
+						Noticia topico = new Noticia(imagem, title, data, content);
+	                    noticiasList.add(topico); // Adicione cada notícia à lista
+					    
+					}*/
 					
 					break;
 					
 				case "itanhaem":
 					
 					for (Element noticia : noticias) {
-		                // Seletor para o link dentro da notícia
-		                Element link = noticia.select("h4 a").first(); // Substitua pelo seletor correto
+					    // Seletor para o link dentro da notícia
+					    Elements links = noticia.select("h4 a"); // Obter todos os links dentro do h4
 
-		                // Verifique se há um link dentro da notícia
-		                if (link != null) {
-		                    String urlNoticia = link.attr("href");
+					    // Iterar sobre os links dentro do h4
+					    for (Element link : links) {
+					    	
+					    	if (link != null) {
+					    	
+					        String urlNoticia = link.attr("href");
 
-		                    // Fazer uma solicitação HTTP para a URL da notícia
-		                    Document noticiaDocument = Jsoup.connect(urlNoticia).get();
+					        // Fazer uma solicitação HTTP para a URL da notícia
+					        Document noticiaDocument = Jsoup.connect(urlNoticia).get();
 
-		                    Element primeiroParagrafo = document.select("p").first();
-		                    // Extrair informações da notícia
-		                    String imagem = noticiaDocument.select(".img-responsive img").attr("src");
-		                    String title = noticia.select("h4").text(); // Substitua pelo seletor correto
-						    String data = noticia.select("span").text();
+					        Element primeiroParagrafo = noticiaDocument.select("article p").first();
+					        // Extrair informações da notícia
+					        String imagem = noticiaDocument.select("figure img").attr("src");
+					        String title = link.text(); // Texto dentro do h4
+					        String data = link.parent().nextElementSibling().text();
 
-						    Noticia topico = new Noticia(imagem, title, data, primeiroParagrafo.text());
-		                    noticiasList.add(topico);
-		                }
-		            }
+					        Noticia topico = new Noticia(imagem, title, data, primeiroParagrafo.text());
+					        noticiasList.add(topico);
+					    }
+					    }
+					}
 					
 					break;
 					
 				case "mongagua":
 					
 					for (Element noticia : noticias) {
-						String imagem = noticia.select(".list-image").attr("href");
+						
+						Elements links = noticia.select("h3 a"); // Obter todos os links dentro do h4
+
+					    // Iterar sobre os links dentro do h4
+					    for (Element link : links) {
+					    	
+					    	if (link != null) {
+					    	
+					        String urlNoticia = "https://www.mongagua.sp.gov.br" + link.attr("href");
+
+					        // Fazer uma solicitação HTTP para a URL da notícia
+					        Document noticiaDocument = Jsoup.connect(urlNoticia).get();
+
+						String imagem = noticiaDocument.select(".post-content img").attr("src");
 						String title = noticia.select(".list-title").text();
-						String data = noticia.select(".list_date").text();
-						String content = noticia.select("._1mf _1mj div").text();
+						String data = noticiaDocument.select(".page-content time").text().substring(0, 10);
+						String content = noticiaDocument.select(".post-content span").text();
 
 						Noticia topico = new Noticia(imagem, title, data, content);
 	                    noticiasList.add(topico); // Adicione cada notícia à lista
 	                    
-	                    System.out.println(title);
-					
+	                    System.out.println(content);
+	                    //
+					    	}
+					    }
 					}
 					
 					break;	
@@ -201,14 +287,29 @@ public class NewsController {
 				case "peruibe":
 					
 					for (Element noticia : noticias) {
-						String imagem = noticia.select("attachment-post-thumbnail img").attr("href");
+
+						Elements links = noticia.select("h2 a"); // Obter todos os links dentro do h4
+
+					    // Iterar sobre os links dentro do h4
+					    for (Element link : links) {
+					    	
+					    	if (link != null) {
+					    	
+					        String urlNoticia = link.attr("href");
+
+					        // Fazer uma solicitação HTTP para a URL da notícia
+					        Document noticiaDocument = Jsoup.connect(urlNoticia).get();
+
+						
+						String imagem = noticiaDocument.select(".zak-content img").attr("src");
 						String title = noticia.select("h2").text();
-						String data = noticia.select(".entry-date published time").text();
+						String data = noticiaDocument.select(".entry-date").text();
 						String content = noticia.select("p").text();
 
 						Noticia topico = new Noticia(imagem, title, data, content);
 	                    noticiasList.add(topico); // Adicione cada notícia à lista
-	                    
+					    	}
+					    }
 					}
 					
 					break;

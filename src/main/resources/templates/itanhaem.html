@@ -28,7 +28,7 @@
 <body>
 
 	<h1>
-		Notícias de <span th:text="${#strings.capitalize(cidade)}"></span>
+		Notícias de <span th:text="${cidade}"></span>
 	</h1>
 
 	<div th:each="noticia : ${noticiasList}">
