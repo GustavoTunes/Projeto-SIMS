@@ -1,18 +1,28 @@
 package com.projeto.sims;
 
 public class Noticia {
-    private String imagem;
-    private String title;
-    private String data;
-    private String content;
+	private String imagem;
+	private String title;
+	private String data;
+	private String content;
+	private String urlNoticia;
 
-    // Construtor
-    public Noticia(String imagem, String title, String data, String content) {
-        this.imagem = imagem;
-        this.title = title;
-        this.data = data;
-        this.content = content;
-    }
+	// Construtor
+	public Noticia(String imagem, String title, String data, String content, String urlNoticia) {
+		this.imagem = imagem;
+		this.title = title;
+		this.data = data;
+		this.content = content;
+		this.urlNoticia = urlNoticia;
+	}
+
+	public String getUrlNoticia() {
+		return urlNoticia;
+	}
+
+	public void setUrlNoticia(String urlNoticia) {
+		this.urlNoticia = urlNoticia;
+	}
 
 	public String getImagem() {
 		return imagem;
@@ -45,5 +55,5 @@ public class Noticia {
 	public void setContent(String content) {
 		this.content = content;
 	}
-    
+
 }
